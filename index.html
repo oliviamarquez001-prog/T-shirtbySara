@@ -330,7 +330,22 @@ function checkout(){ alert('Proceso de compra demo — integrar pasarela en prod
 
 // eventos UI
 window.addEventListener('load', ()=>{
-  load(); loadCart(); renderProducts(); renderAdmin();
+  load(); loadCart();
+
+  // AUTO-CARGAR PRODUCTOS LA PRIMERA VEZ
+  if(products.length === 0){
+    products = [
+      { id: uid(), title:'Camiseta básica blanca', description:'Algodón 100%. Corte unisex.', price:12.99, stock:50, colors:['#ffffff','#000000','#ff0000'], sizes:['S','M','L','XL'], image:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=60' },
+      { id: uid(), title:'Camiseta deportiva', description:'Transpirable, ideal para deporte.', price:18.5, stock:30, colors:['#1f77b4','#2ca02c'], sizes:['M','L','XL'], image:'https://images.unsplash.com/photo-1520975928392-1b6b7f12d0ec?auto=format&fit=crop&w=800&q=60' }
+    ];
+    save();
+  }
+
+  renderProducts(); renderAdmin();
+  ...
+});
+
+
   document.getElementById('nav-admin').addEventListener('click',(e)=>{ e.preventDefault(); document.getElementById('view-admin').classList.remove('d-none'); document.getElementById('view-store').classList.add('d-none'); });
   document.getElementById('nav-store').addEventListener('click',(e)=>{ e.preventDefault(); document.getElementById('view-admin').classList.add('d-none'); document.getElementById('view-store').classList.remove('d-none'); });
   document.getElementById('btn-add-product').addEventListener('click',()=>{ document.getElementById('product-form').reset(); document.getElementById('product-id').value=''; const modal = new bootstrap.Modal(document.getElementById('productModal')); modal.show(); });
@@ -352,4 +367,6 @@ function checkout(){ alert('Compra demo: guardar orden en servidor / pasarela en
 
 </script>
 </body>
+
+
 </html>
